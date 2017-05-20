@@ -6,6 +6,9 @@ const progressBar = player.querySelector('.progress_filled');
 const toggle = player.querySelector('.toggle');
 const skipButtons = player.querySelectorAll('[data-skip]');
 const ranges = player.querySelectorAll('.player_slider');
+const fullscreen = player.querySelector('.fullscreen');
+
+let isFullScreen = false;
 
 function togglePlay()
 {
@@ -42,6 +45,53 @@ function scrub(e)
   video.currentTime = scrubTime;
 }
 
+function toggleFullScreen(e) 
+{
+  if (isFullScreen) 
+  {
+    if (document.exitFullscreen) 
+	{
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) 
+	{
+      document.mozCancelFullScreen();
+    } else if (document.webkitCancelFullScreen) 
+	{
+      document.webkitCancelFullScreen();
+    } else if (document.msExitFullscreen) 
+	{
+      document.msExitFullscreen();
+    } else 
+	{
+      console.error('Unable to find a fullscreen exit method.');
+    }
+    console.log('removing fullscreen class');
+  } else 
+  {
+    if (player.requestFullscreen) 
+	{
+      player.requestFullscreen(); // standard
+    } else if (player.webkitRequestFullscreen) 
+	{
+      player.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    } else if (player.mozRequestFullScreen) 
+	{
+      player.mozRequestFullScreen();
+    } else if (player.msRequestFullscreen) 
+	{
+      player.msRequestFullscreen();
+    } else 
+	{
+      console.error('Unable to find a fullscreen request method');
+    }
+  }
+}
+
+function toggleFullScreenClasses() {
+  player.classList.toggle('fullscreen');
+  isFullScreen = !isFullScreen;
+}
+
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
 video.addEventListener('pause', updateButton);
@@ -57,3 +107,10 @@ progress.addEventListener('click', scrub);
 progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
 progress.addEventListener('mousedown', () => mousedown = true);
 progress.addEventListener('mouseup', () => mousedown = false);
+
+fullscreen.addEventListener('click', toggleFullScreen);
+
+document.addEventListener('fullscreenchange', toggleFullScreenClasses);
+document.addEventListener('mozfullscreenchange', toggleFullScreenClasses);
+document.addEventListener('webkitfullscreenchange', toggleFullScreenClasses);
+document.addEventListener('msfullscreenchange', toggleFullScreenClasses);
