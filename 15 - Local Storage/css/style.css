@@ -2,12 +2,12 @@
 html {
 	box-sizing: border-box;
 	background:url('http://wes.io/hx9M/oh-la-la.jpg') center no-repeat;
-      background-size:cover;
-      min-height:100vh;
-      display:flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+    background-size:cover;
+    min-height:100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 *, *:after, *:before {
@@ -16,7 +16,7 @@ html {
 
 svg {
 	fill: #fff;
-	background: rggba(0, 0, 0, 0.1);
+	background: rgba(0, 0, 0, 0.1);
 	padding: 20px;
 	border-radius: 50%;
 	width: 200px;
